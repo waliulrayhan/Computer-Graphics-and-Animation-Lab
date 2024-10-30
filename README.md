@@ -2,16 +2,18 @@
 <hr>
 
 ## Several Codes Related to Computer Graphics and Animation
-- DDA Line Algorithm using C++. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/ddaLineAlgorithm.cpp).
-- DDA Line Algorithm using Python. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/ddaLineAlgorithm.py). The screenshot is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/ddaLineAlgorithm.png).
-- Mid Point Line Algorithm using C++. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointLineAlgorithm.cpp).
-- Mid Point Line Algorithm using Python. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointLineAlgorithm.py). The screenshot is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointLineAlgorithm.png).
-- Mid Point Circle Algorithm using C++. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointCircleAlgorithm.cpp).
-- Mid Point Circle Algorithm using Python. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointCircleAlgorithm.py). The screenshot is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointCircleAlgorithm.png).
+- DDA Line Algorithm using OpenGL. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/ddaLineAlgorithm/main.cpp).
+- Mid Point Line Algorithm using OpenGL. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointLineAlgorithm/main.cpp).
+- Bresenham Line Drawing Algorithm using OpenGL. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/bresenhamLineDrawingAlgorithm/main.cpp).
+- Mid Point Circle Algorithm using OpenGL. The code is [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/midpointCircleAlgorithm/main.cpp).
 
-## Assignment
-- Create a simple **House** using GLUT. Find the code [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/house.cpp).<br>
-<img src="images/Screenshot_1.png" alt="Image 1" width="200">
+## National Monument of Bangladesh
+<img src="images/nationalMonumentOfBangladesh.png" alt="National Monument of Bangladesh" width="500"><br>
+- Find the code [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/Still%20Object%20(2D)/nationalMonumentOfBangladesh/main.cpp).
+
+## Shaheed Minar of Bangladesh
+<img src="images/shaheedMinar.png" alt="Shaheed Minar of Bangladesh" width="500"><br>
+- Find the code [here](https://github.com/nishatrhythm/Computer-Graphics-and-Animation/blob/main/Still%20Object%20(2D)/shaheedMinarOptimized/main.cpp).
 
 ## Create a GLUT Project in CodeBlocks (Windows 64-bit)
 
