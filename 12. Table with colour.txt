@@ -1,0 +1,96 @@
+#include <windows.h>
+#include <GL/glut.h>
+#include <math.h>
+
+// Display callback function
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);  // Clear the window with the background color
+
+    // Right-side facing chair with filled colors
+
+    // Seat of the chair (filled polygon)
+    glColor3f(0.6, 0.3, 0.0);  // Brown color for the seat
+    glBegin(GL_POLYGON);
+    glVertex2i(420, 300);  // Top right of the seat
+    glVertex2i(270, 300);  // Top left of the seat
+    glVertex2i(200, 350);  // Back left corner of the backrest
+    glVertex2i(350, 350);  // Back right corner of the backrest
+    glEnd();
+
+    // Bottom side of the seat
+    glColor3f(0.5, 0.2, 0.0);  // Darker brown for the side
+    glBegin(GL_POLYGON);
+    glVertex2i(420, 280);  // Bottom right of the seat
+    glVertex2i(270, 280);  // Bottom left of the seat
+    glVertex2i(270, 300);  // Top left of the seat
+    glVertex2i(420, 300);  // Top right of the seat
+    glEnd();
+
+    // Bottom side panel of the seat
+    glColor3f(0.5, 0.2, 0.0);  // Darker brown for the panel
+    glBegin(GL_POLYGON);
+    glVertex2i(270, 280);  // Bottom left corner
+    glVertex2i(200, 330);  // Top left corner of the side
+    glVertex2i(200, 350);  // Backrest corner
+    glVertex2i(270, 300);  // Top left of the seat
+    glEnd();
+
+    // Chair legs (filled polygons)
+    glColor3f(0.4, 0.2, 0.1);  // Dark brown for the legs
+    glBegin(GL_POLYGON);
+    glVertex2i(420, 280);  // Front right leg top
+    glVertex2i(420, 180);  // Front right leg bottom
+    glVertex2i(400, 180);  // Front right leg bottom (left edge)
+    glVertex2i(400, 280);  // Front right leg top (left edge)
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2i(290, 280);  // Front left leg top
+    glVertex2i(290, 180);  // Front left leg bottom
+    glVertex2i(270, 180);  // Front left leg bottom (right edge)
+    glVertex2i(270, 280);  // Front left leg top (right edge)
+    glEnd();
+
+    glBegin(GL_POLYGON);
+    glVertex2i(350, 280);  // Back right leg top
+    glVertex2i(350, 230);  // Back right leg bottom
+    glVertex2i(330, 230);  // Back right leg bottom (left edge)
+    glVertex2i(330, 280);  // Back right leg top (left edge)
+    glEnd();
+
+    // Backrest and supporting legs
+    glColor3f(0.5, 0.2, 0.0);  // Dark brown for the backrest support
+    glBegin(GL_POLYGON);
+    glVertex2i(200, 330);  // Back left supporting leg top
+    glVertex2i(200, 230);  // Back left supporting leg bottom
+    glVertex2i(220, 230);  // Back left supporting leg bottom (right edge)
+    glVertex2i(220, 315);  // Back left supporting leg top (right edge)
+    glEnd();
+
+    glFlush();  // Execute all OpenGL commands
+}
+
+// Initialize OpenGL Graphics
+void init()
+{
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // Set background to white
+    glColor3f(0.0, 0.0, 0.0);          // Set drawing color to black
+    glPointSize(4.0);                  // Set point size for drawing (not used here)
+    glMatrixMode(GL_PROJECTION);       // Set the projection mode
+    glLoadIdentity();                  // Reset the projection matrix
+    gluOrtho2D(0.0, 640.0, 0.0, 640.0); // Define the coordinate system for the window
+}
+
+// Main function
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);                // Initialize the GLUT library
+    glutCreateWindow("Basics - Right Facing Chair"); // Create a window with the given title
+    glutInitWindowSize(640, 480);          // Set window size to 640x480 pixels
+    glutInitWindowPosition(50, 50);        // Position the window at (50, 50)
+    glutDisplayFunc(display);              // Register the display function callback
+    init();                                // Call the initialization function
+    glutMainLoop();                        // Enter the GLUT main loop
+    return 0;
+}

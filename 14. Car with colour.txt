@@ -1,0 +1,93 @@
+#include <windows.h>
+#include <GL/glut.h>
+#include <math.h>
+
+// Function to draw a filled circle (used for wheels)
+void drawCircle(float centerX, float centerY, float radius, int numSegments, float r, float g, float b) {
+    // Set the fill color using RGB values
+    glColor3f(r, g, b);
+
+    // Begin drawing the filled circle
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(centerX, centerY);  // Center of the circle
+    for (int i = 0; i <= numSegments; i++) {
+        float theta = 2.0f * 3.1415926f * float(i) / float(numSegments);  // Angle
+        float x = radius * cosf(theta);  // X coordinate
+        float y = radius * sinf(theta);  // Y coordinate
+        glVertex2f(centerX + x, centerY + y);
+    }
+    glEnd();
+}
+
+// Display callback function
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Car body - fill with blue
+    glColor3f(0.0, 0.0, 1.0);  // Blue color for the car body
+    glBegin(GL_POLYGON);
+    glVertex2i(100, 200);  // Rear left
+    glVertex2i(400, 200);  // Front right
+    glVertex2i(415, 225);  // Front curve
+    glVertex2i(400, 260);  // Top right corner
+    glVertex2i(300, 260);  // Top front
+    glVertex2i(250, 300);  // Top roof
+    glVertex2i(150, 300);  // Rear roof
+    glVertex2i(120, 260);  // Rear roof
+    glVertex2i(100, 260);  // Rear curve
+    glEnd();
+
+    // Car windows - fill with light gray
+    glColor3f(0.8, 0.8, 0.8);  // Light gray color for windows
+    glBegin(GL_POLYGON);
+    glVertex2i(125, 260);  // Rear left window
+    glVertex2i(200, 260);  // Front divider window
+    glVertex2i(200, 295);  // Top front
+    glVertex2i(150, 295);  // Top rear
+    glEnd();
+
+    glColor3f(0.0, 0.0, 1.0);  // Light gray color for windows
+    glBegin(GL_POLYGON);
+    glVertex2i(200, 260);  // Rear left window
+    glVertex2i(205, 260);  // Front divider window
+    glVertex2i(205, 295);  // Top front
+    glVertex2i(200, 295);  // Top rear
+    glEnd();
+
+    glColor3f(0.8, 0.8, 0.8);
+    glBegin(GL_POLYGON);
+    glVertex2i(205, 260);  // Front left window
+    glVertex2i(295, 260);  // Front right window
+    glVertex2i(250, 295);  // Top right
+    glVertex2i(205, 295);  // Top left
+    glEnd();
+
+    // Draw the two wheels (outer circle: black, inner circle: gray)
+    drawCircle(160, 200, 30, 50, 0.0, 0.0, 0.0);  // Left wheel (black)
+    drawCircle(340, 200, 30, 50, 0.0, 0.0, 0.0);  // Right wheel (black)
+    drawCircle(160, 200, 13, 50, 0.5, 0.5, 0.5);  // Left wheel (gray inner circle)
+    drawCircle(340, 200, 13, 50, 0.5, 0.5, 0.5);  // Right wheel (gray inner circle)
+
+    glFlush();  // Render everything
+}
+
+// Initialize OpenGL Graphics
+void init() {
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // Set the background to white
+    glColor3f(0.0, 0.0, 0.0);          // Set the drawing color to black
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 640.0, 0.0, 480.0);  // Define the 2D orthographic projection
+}
+
+// Main function
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);  // Initialize the GLUT library
+    glutCreateWindow("Simple Car with Color");  // Create a window with the given title
+    glutInitWindowSize(640, 480);  // Set the window size
+    glutInitWindowPosition(50, 50);  // Position the window
+    glutDisplayFunc(display);  // Register the display callback function
+    init();  // Initialize the OpenGL settings
+    glutMainLoop();  // Enter the GLUT event processing loop
+    return 0;
+}

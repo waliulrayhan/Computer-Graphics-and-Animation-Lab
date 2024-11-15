@@ -1,0 +1,86 @@
+#include <windows.h>
+#include <GL/glut.h>
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+// Global variables for line coordinates
+int x1_coord, y1_coord, x2_coord, y2_coord;
+
+// Initialization function to set up OpenGL
+void init() {
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // Set background color to white
+    glColor3f(0.0, 0.0, 0.0);          // Set the line color to black
+    glPointSize(3.0);                  // Increase point size to make points more visible
+    glMatrixMode(GL_PROJECTION);       // Specify the projection matrix
+    glLoadIdentity();                  // Load identity matrix for projections
+    gluOrtho2D(0.0, 50.0, 0.0, 50.0);  // Adjust the range for better zoom
+}
+
+// Midpoint Line Drawing Algorithm
+void midpointLine() {
+    glClear(GL_COLOR_BUFFER_BIT);  // Clear the display window
+
+    int dx = x2_coord - x1_coord;
+    int dy = y2_coord - y1_coord;
+    int d = 2 * dy - dx;  // Initial decision parameter
+    int incrE = 2 * dy;   // Increment if choosing East pixel
+    int incrNE = 2 * (dy - dx);  // Increment if choosing North-East pixel
+
+    int x = x1_coord, y = y1_coord;
+
+    // Print initial point
+    cout << "Midpoint Line Algorithm Points:" << endl;
+    cout << "Initial Point: (" << x << ", " << y << ")" << endl;
+
+    glBegin(GL_POINTS);
+    glVertex2i(x, y);  // Plot the first point
+
+    while (x < x2_coord) {
+        if (d <= 0) {
+            d += incrE;  // East pixel
+        } else {
+            d += incrNE;  // North-East pixel
+            y++;
+        }
+        x++;
+        glVertex2i(x, y);  // Plot the next point
+
+        // Print the current point
+        cout << "Point: (" << x << ", " << y << ")" << endl;
+    }
+    glEnd();
+    glFlush();  // Process all OpenGL commands
+}
+
+// Display function for the Midpoint Line Algorithm
+void display() {
+    midpointLine();
+}
+
+// Main function that runs the OpenGL program
+int main(int argc, char** argv) {
+    // Prompt the user for input
+    cout << "Enter the coordinates of the first point (x1, y1): ";
+    cin >> x1_coord >> y1_coord;
+    cout << "Enter the coordinates of the second point (x2, y2): ";
+    cin >> x2_coord >> y2_coord;
+
+    // Initialize GLUT and OpenGL
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("Midpoint Line Algorithm");
+
+    // Set up OpenGL settings
+    init();
+
+    // Register the display function for rendering the line
+    glutDisplayFunc(display);
+
+    // Start the GLUT event processing loop
+    glutMainLoop();
+
+    return 0;
+}

@@ -1,0 +1,80 @@
+#include <windows.h>
+#include <GL/glut.h>
+
+void init() {
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // White background
+    glMatrixMode(GL_PROJECTION);
+    gluOrtho2D(0.0, 400.0, 0.0, 400.0);  // Set up a coordinate system
+}
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Seat of the chair (Rectangle)
+    glColor3f(0.0, 0.0, 1.0);  // Blue color for lines
+    glBegin(GL_LINE_LOOP);
+    glVertex2i(150, 200);  // Front left
+    glVertex2i(250, 200);  // Front right
+    glVertex2i(230, 230);  // Back right
+    glVertex2i(130, 230);  // Back left
+    glEnd();
+
+    // Backrest lines
+    glBegin(GL_LINES);
+    // Left side backrest
+    glVertex2i(130, 230);  // Bottom
+    glVertex2i(130, 330);  // Top
+    // Right side backrest
+    glVertex2i(230, 230);  // Bottom
+    glVertex2i(230, 330);  // Top
+    // Top Side backrest
+    glVertex2i(130, 330);  // Left
+    glVertex2i(230, 330);  // Right
+    // Middle Side backrest
+    glVertex2i(130, 265);  // Left
+    glVertex2i(230, 265);  // Right
+    // Middle Side backrest
+    glVertex2i(130, 300);  // Left
+    glVertex2i(230, 300);  // Right
+    glEnd();
+
+    // Legs of the chair (Lines)
+    glBegin(GL_LINES);
+    // Left front leg
+    glVertex2i(150, 200);  // Top
+    glVertex2i(150, 100);  // Bottom
+    // Right front leg
+    glVertex2i(250, 200);  // Top
+    glVertex2i(250, 100);  // Bottom
+    // Left back leg (slightly tilted for perspective)
+    glVertex2i(130, 230);  // Top
+    glVertex2i(130, 120);  // Bottom
+    // Right back leg
+    glVertex2i(230, 230);  // Top
+    glVertex2i(230, 120);  // Bottom
+    glEnd();
+
+    // Add some horizontal lines for more 3D effect on seat
+    glBegin(GL_LINES);
+    // Under seat lines
+    glVertex2i(150, 200);
+    glVertex2i(130, 230);
+    glVertex2i(250, 200);
+    glVertex2i(230, 230);
+    glEnd();
+
+    glFlush();  // Render the chair
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("3D Chair with Guide Lines");
+
+    init();
+    glutDisplayFunc(display);
+    glutMainLoop();
+    return 0;
+}

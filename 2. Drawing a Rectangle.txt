@@ -1,0 +1,42 @@
+#include<windows.h>
+#include<GL/glut.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include <GL/glut.h>
+
+void init() {
+    glClearColor(0.0, 0.0, 0.0, 1.0);  // Black background
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(-100, 100, -100, 100);
+}
+
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glColor3f(0.0, 1.0, 0.0);  // Set rectangle color to green
+    glBegin(GL_POLYGON);  // Begin drawing a polygon (rectangle in this case)
+        glVertex2i(-50, -30);  // Bottom left corner
+        glVertex2i(50, -30);   // Bottom right corner
+        glVertex2i(50, 30);    // Top right corner
+        glVertex2i(-50, 30);   // Top left corner
+    glEnd();
+
+    glFlush();
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(500, 500);
+    glutInitWindowPosition(100, 100);
+    glutCreateWindow("OpenGL Rectangle");
+
+    init();
+    glutDisplayFunc(display);
+
+    glutMainLoop();
+    return 0;
+}
+
+

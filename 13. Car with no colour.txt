@@ -1,0 +1,76 @@
+#include <windows.h>
+#include <GL/glut.h>
+#include <math.h>
+
+// Function to draw a circle (used for wheels)
+void drawCircle(float centerX, float centerY, float radius, int numSegments) {
+    glBegin(GL_LINE_LOOP);
+    for (int i = 0; i <= numSegments; i++) {
+        float theta = 2.0f * 3.1415926f * float(i) / float(numSegments);  // Angle
+        float x = radius * cosf(theta);  // X coordinate
+        float y = radius * sinf(theta);  // Y coordinate
+        glVertex2f(centerX + x, centerY + y);
+    }
+    glEnd();
+}
+
+// Display callback function
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glColor3f(0.0, 0.0, 0.0);  // Set color to black for the car outline
+
+    // Car body - main frame
+    glBegin(GL_LINE_LOOP);
+    glVertex2i(100, 200);  // Rear left
+    glVertex2i(400, 200);  // Front right
+    glVertex2i(415, 225);  // Front curve
+    glVertex2i(400, 260);  // Top right corner
+    glVertex2i(300, 260);  // Top front
+    glVertex2i(250, 300);  // Top roof
+    glVertex2i(150, 300);  // Rear roof
+    glVertex2i(120, 260);  // Rear roof
+    glVertex2i(100, 260);  // Rear curve
+    glEnd();
+
+    // Draw the windows
+    glBegin(GL_LINES);
+    // Middle divider between windows
+    glVertex2i(200, 300);
+    glVertex2i(200, 260);
+    // Bottom of the windows
+    glVertex2i(100, 260);
+    glVertex2i(300, 260);
+    glEnd();
+
+    // Draw the two wheels
+    drawCircle(160, 200, 30, 50);  // Left wheel
+    drawCircle(340, 200, 30, 50);  // Right wheel
+    drawCircle(160, 200, 13, 50);  // Left wheel
+    drawCircle(340, 200, 13, 50);  // Right wheel
+
+    glEnd();
+
+    glFlush();
+}
+
+// Initialize OpenGL Graphics
+void init() {
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // Set the background to white
+    glColor3f(0.0, 0.0, 0.0);          // Set the drawing color to black
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 640.0, 0.0, 480.0);  // Define the 2D orthographic projection
+}
+
+// Main function
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);  // Initialize the GLUT library
+    glutCreateWindow("Simple Car Outline");  // Create a window with the given title
+    glutInitWindowSize(640, 480);  // Set the window size
+    glutInitWindowPosition(50, 50);  // Position the window
+    glutDisplayFunc(display);  // Register the display callback function
+    init();  // Initialize the OpenGL settings
+    glutMainLoop();  // Enter the GLUT event processing loop
+    return 0;
+}

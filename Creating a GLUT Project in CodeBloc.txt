@@ -1,0 +1,25 @@
+Creating a GLUT Project in CodeBlocks (Windows 64-bit)
+
+Method 1
+If you install CodeBlocks with MinGW and have NOT installed MinGW separately
+Download and install codeblocks-20.03mingw-setup.exe from https://www.codeblocks.org/downloads/binaries
+Download this GLUT file https://drive.google.com/file/d/13LmkeuX_mGt6E5UEUBdCp8h2_HGKq9TY
+Unzip the GLUT file using WinRAR or other unzipper software.
+Copy glut.h and paste it inside C:\Program Files\CodeBlocks\MinGW\include\GL
+Copy glut32.lib and paste it inside C:\Program Files\CodeBlocks\MinGW\lib
+Copy glut32.dll and paste it inside C:\Windows\SysWOW64
+Create a new project in CodeBlocks and select the GLUT project. Give a name to your project.
+Select the GLUT location as C:\Program Files\CodeBlocks\MinGW
+
+Method 2
+If you install CodeBlocks and MinGW separately
+Download the MinGW downloader from https://sourceforge.net/projects/mingw/files/latest/download
+Install the basic package of MinGW and add the location C:\MinGW\bin to the Environment Variable path.
+Download and install codeblocks-20.03mingw-setup.exe from https://www.codeblocks.org/downloads/binaries
+Download this GLUT file https://drive.google.com/file/d/13LmkeuX_mGt6E5UEUBdCp8h2_HGKq9TY
+Unzip the GLUT file using WinRAR or other unzipper software.
+Copy glut.h and paste it inside C:\MinGW\include\GL
+Copy glut32.lib and paste it inside C:\MinGW\lib
+Copy glut32.dll and paste it inside C:\Windows\SysWOW64
+Create a new project in CodeBlocks and select the GLUT project. Give a name to your project.
+Select the GLUT location as C:\MinGW

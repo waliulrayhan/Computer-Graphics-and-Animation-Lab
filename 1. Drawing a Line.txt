@@ -1,0 +1,43 @@
+#include<windows.h>
+#include<GL/glut.h>
+#include<stdlib.h>
+#include<stdio.h>
+#include <GL/glut.h>  // Includes the GLUT library
+
+// Function to initialize OpenGL settings
+void init() {
+    //glClearColor(0.0, 0.0, 0.0, 1.0);  // Set background color to black
+    glClearColor(1.0, 1.0, 1.0, 1.0);  // Set background color to white
+    glMatrixMode(GL_PROJECTION);  // Set the projection mode
+    glLoadIdentity();  // Reset any previous settings
+    gluOrtho2D(-100, 100, -100, 100);  // Set 2D orthographic projection (left, right, bottom, top)
+}
+
+// Function to display objects on the screen
+void display() {
+    glClear(GL_COLOR_BUFFER_BIT);  // Clear the display buffer with the background color
+
+    glColor3f(1.0, 0.0, 0.0);  // Set the line color to red
+    glBegin(GL_LINES);  // Begin drawing a line
+        glVertex2i(-50, 0);  // Starting point (x1, y1)
+        glVertex2i(50, 0);   // Ending point (x2, y2)
+    glEnd();  // End drawing
+
+    glFlush();  // Render the line immediately
+}
+
+// Main function to set up the GLUT environment
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);  // Initialize the GLUT library
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);  // Set display mode to single buffer and RGB color
+    glutInitWindowSize(500, 500);  // Set window size
+    glutInitWindowPosition(100, 100);  // Set window position
+    glutCreateWindow("OpenGL Line");  // Create window with title
+
+    init();  // Call the init function to set up OpenGL
+    glutDisplayFunc(display);  // Set display callback function to render the shapes
+
+    glutMainLoop();  // Enter the GLUT event loop
+    return 0;
+}
+

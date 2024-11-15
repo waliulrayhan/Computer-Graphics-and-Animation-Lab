@@ -1,0 +1,189 @@
+#include <windows.h>
+#include <GL/glut.h>
+#include <math.h>
+
+// Function to draw a filled circle
+void drawFilledCircle(float cx, float cy, float radius, int num_segments)
+{
+    glBegin(GL_TRIANGLE_FAN);
+    for (int i = 0; i <= num_segments; i++)
+    {
+        float theta = 2.0f * 3.1415926f * float(i) / float(num_segments);
+        float x = radius * cosf(theta);
+        float y = radius * sinf(theta);
+        glVertex2f(x + cx, y + cy);
+    }
+    glEnd();
+}
+
+// Function to draw the car
+void drawCar()
+{
+    // Car body
+    glColor3f(0.0, 0.0, 0.8);  // Dark blue color for the car body
+    glBegin(GL_POLYGON);
+    glVertex2i(100, 50);  // Rear left
+    glVertex2i(200, 50);  // Front right
+    glVertex2i(207, 63);  // Front curve
+    glVertex2i(200, 80);  // Top right corner
+    glVertex2i(170, 80);  // Top front
+    glVertex2i(150, 90);  // Top roof
+    glVertex2i(120, 90);  // Rear roof
+    glVertex2i(110, 80);  // Rear roof
+    glVertex2i(100, 80);  // Rear curve
+    glEnd();
+
+    // Car windows
+    glColor3f(0.8, 0.9, 1.0);  // Light blue color for windows
+    glBegin(GL_POLYGON);  // Rear left window
+    glVertex2i(115, 78);
+    glVertex2i(140, 78);
+    glVertex2i(140, 88);
+    glVertex2i(125, 88);
+    glEnd();
+
+    glColor3f(0.0, 0.0, 0.8);  // Dark blue color for the car body
+    glBegin(GL_POLYGON);  // Divider window
+    glVertex2i(140, 78);
+    glVertex2i(135, 78);
+    glVertex2i(135, 88);
+    glVertex2i(140, 88);
+    glEnd();
+
+    glColor3f(0.8, 0.9, 1.0);  // Light blue color for windows
+    glBegin(GL_POLYGON);  // Front left window
+    glVertex2i(140, 78);
+    glVertex2i(170, 78);
+    glVertex2i(150, 88);
+    glVertex2i(140, 88);
+    glEnd();
+
+    // Car wheels (black outer circles)
+    glColor3f(0.0, 0.0, 0.0);  // Black wheels
+    drawFilledCircle(130, 50, 10, 30);  // Left wheel
+    drawFilledCircle(170, 50, 10, 30);  // Right wheel
+
+    // Inner circle of the wheels (gray center)
+    glColor3f(0.5, 0.5, 0.5);  // Gray color for inner wheels
+    drawFilledCircle(130, 50, 5, 30);  // Left wheel inner
+    drawFilledCircle(170, 50, 5, 30);  // Right wheel inner
+}
+
+// Function to draw the building
+void drawBuilding()
+{
+    // Building body
+    glColor3f(0.6, 0.6, 0.6);  // Light gray for the building
+    glBegin(GL_POLYGON);
+    glVertex2i(300, 80);  // Bottom left corner
+    glVertex2i(510, 80);  // Bottom right corner
+    glVertex2i(510, 300);  // Top right corner
+    glVertex2i(300, 300);  // Top left corner
+    glEnd();
+
+    // Windows of the building (light blue)
+    glColor3f(0.3, 0.6, 1.0);  // Light blue windows
+    for (int y = 280; y > 80; y -= 40)  // Rows of windows
+    {
+        for (int x = 310; x < 490; x += 40)  // Columns of windows
+        {
+            glBegin(GL_POLYGON);
+            glVertex2i(x, y);         // Bottom-left
+            glVertex2i(x + 30, y);    // Bottom-right
+            glVertex2i(x + 30, y - 30);  // Top-right
+            glVertex2i(x, y - 30);    // Top-left
+            glEnd();
+        }
+    }
+
+    // Entrance of the building
+    glColor3f(0.4, 0.4, 0.4);  // Darker gray for the entrance
+    glBegin(GL_POLYGON);
+    glVertex2i(350, 80);  // Bottom-left
+    glVertex2i(460, 80);  // Bottom-right
+    glVertex2i(460, 120);  // Top-right
+    glVertex2i(350, 120);  // Top-left
+    glEnd();
+}
+
+// Function to draw the road
+void drawRoad()
+{
+    // Road background
+    glColor3f(0.2, 0.2, 0.2);  // Dark gray road
+    glBegin(GL_POLYGON);
+    glVertex2i(0, 80);       // Road's top left
+    glVertex2i(640, 80);     // Road's top right
+    glVertex2i(640, 0);      // Road's bottom right
+    glVertex2i(0, 0);        // Road's bottom left
+    glEnd();
+
+    // Dashed white lines on the road
+    glColor3f(1.0, 1.0, 1.0);  // White color for dashes
+    for (int i = 0; i < 640; i += 50)
+    {
+        glBegin(GL_POLYGON);
+        glVertex2i(i + 10, 40);        // Left side of dash
+        glVertex2i(i + 30, 40);        // Right side of dash
+        glVertex2i(i + 30, 45);        // Top right
+        glVertex2i(i + 10, 45);        // Top left
+        glEnd();
+    }
+}
+
+// Function to draw the tree
+void drawTree()
+{
+    // Tree trunk
+    glColor3f(0.4, 0.2, 0.0);  // Brown color for the trunk
+    glBegin(GL_POLYGON);
+    glVertex2i(230, 80);
+    glVertex2i(240, 80);
+    glVertex2i(240, 180);
+    glVertex2i(230, 180);
+    glEnd();
+
+    // Tree foliage (three overlapping green circles)
+    glColor3f(0.0, 0.8, 0.0);  // Green color for the foliage
+    drawFilledCircle(215, 180, 30, 30);
+    drawFilledCircle(235, 200, 30, 30);
+    drawFilledCircle(255, 180, 30, 30);
+}
+
+// Display callback function
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // Draw the road, building, tree, and car
+    drawRoad();
+    drawBuilding();
+    drawTree();
+    drawCar();
+
+    glFlush();
+}
+
+// Initialize OpenGL Graphics
+void init()
+{
+    glClearColor(0.6, 0.85, 1.0, 1.0);  // Light sky blue background
+    glColor3f(0.0, 0.0, 0.0);          // Set drawing color to black
+    glPointSize(4.0);                  // Set point size
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0, 640.0, 0.0, 480.0);  // Set up 2D projection
+}
+
+// Main function
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutCreateWindow("Realistic Building, Road, Tree, and Car");
+    glutInitWindowSize(640, 480);
+    glutInitWindowPosition(50, 50);
+    glutDisplayFunc(display);
+    init();
+    glutMainLoop();
+    return 0;
+}

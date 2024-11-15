@@ -1,0 +1,178 @@
+#include <windows.h>
+#include <GL/glut.h>
+#include <cmath>
+
+// Function to draw a filled circle
+void drawFilledCircle(float cx, float cy, float radius, int segments)
+{
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(cx, cy);  // Center point of the circle
+    for (int i = 0; i <= segments; i++)
+    {
+        float theta = 2.0f * 3.1415926f * float(i) / float(segments);
+        float x = radius * cosf(theta);  // x coordinate
+        float y = radius * sinf(theta);  // y coordinate
+        glVertex2f(x + cx, y + cy);      // Output vertex
+    }
+    glEnd();
+}
+
+// Function to draw the national monument triangles
+void drawMonumentTriangles()
+{
+    int base_left_x = 160;  // Initial left point of the base
+    int base_right_x = 480; // Initial right point of the base
+    int base_y = 100;       // Y-coordinate of the base (same for all triangles)
+
+    int height_increase = 50;  // Initial height increment
+    int base_shrink = 20;      // How much to decrease the base width for each triangle
+
+    // Darker gray colors for better contrast
+    float colors[7][3] =
+    {
+        {0.01, 0.01, 0.01},  // Very Dark Gray (almost black)
+        {0.15, 0.15, 0.15},  // Dark Gray
+        {0.30, 0.30, 0.30},  // Medium Dark Gray
+        {0.45, 0.45, 0.45},  // Mid Gray
+        {0.60, 0.60, 0.60},  // Medium Light Gray
+        {0.75, 0.75, 0.75},  // Light Gray
+        {0.85, 0.85, 0.85}   // Very Light Gray (but not white)
+    };
+
+    // Draw the 7 triangles
+    for (int i = 0; i < 7; i++)
+    {
+        glColor3f(colors[i][0], colors[i][1], colors[i][2]);
+        glBegin(GL_TRIANGLES);
+        glVertex2i(base_left_x, base_y);   // Bottom left
+        glVertex2i(base_right_x, base_y);  // Bottom right
+        glVertex2i((base_left_x + base_right_x) / 2, base_y + height_increase);   // Top middle
+        glEnd();
+
+        // Update the base and height for the next triangle
+        base_left_x += base_shrink;
+        base_right_x -= base_shrink;
+        height_increase += 50;
+    }
+}
+
+// Function to draw the smaller polygons in the monument
+void drawMonumentDetails()
+{
+    // Base triangle under the monument
+    glColor3f(0.65, 0.65, 0.65);
+    glBegin(GL_POLYGON);
+    glVertex2i(280, 100);
+    glVertex2i(360, 100);
+    glVertex2i(320, 120);
+    glEnd();
+
+    // Small black triangle (lower section)
+    glColor3f(0.5, 0.5, 0.5);
+    glBegin(GL_POLYGON);
+    glVertex2i(305, 253);
+    glVertex2i(335, 253);
+    glVertex2i(320, 300);
+    glEnd();
+
+    // Small triangle (middle section)
+    glColor3f(0.5, 0.5, 0.5);
+    glBegin(GL_POLYGON);
+    glVertex2i(320, 200);
+    glVertex2i(335, 247);
+    glVertex2i(305, 247);
+    glEnd();
+
+    // Thin line between the small triangles
+    glColor3f(0.75, 0.75, 0.75);
+    glBegin(GL_POLYGON);
+    glVertex2i(305, 247);
+    glVertex2i(335, 247);
+    glVertex2i(335, 253);
+    glVertex2i(305, 253);
+    glEnd();
+}
+
+// Function to draw the flag
+void drawFlag()
+{
+    // Draw the flag (green rectangle)
+    glColor3f(0.0, 0.42, 0.31);  // Official Bangladesh flag green color
+    glBegin(GL_POLYGON);
+    glVertex2i(100, 300);  // Bottom-left
+    glVertex2i(170, 300);  // Bottom-right
+    glVertex2i(170, 350);  // Top-right
+    glVertex2i(100, 350);  // Top-left
+    glEnd();
+
+    // Draw the red circle in the flag
+    glColor3f(0.82, 0.1, 0.1);  // Official Bangladesh flag red circle color
+    drawFilledCircle(135.0f, 325.0f, 15.0f, 100);  // Draw a filled circle
+
+    // Draw the flagpole
+    glColor3f(0.6, 0.3, 0.1);   // Brown for the flagpole
+    glBegin(GL_POLYGON);
+    glVertex2i(98, 100);  // Bottom
+    glVertex2i(100, 100);  // Bottom
+    glVertex2i(100, 350);  // Top
+    glVertex2i(98, 350);   // Top
+    glEnd();
+}
+
+// Function to draw the ground
+void drawGround()
+{
+    // Draw the lower brown ground
+    glColor3f(0.6, 0.3, 0.1);  // Brown for the ground
+    glBegin(GL_POLYGON);
+    glVertex2i(0, -10);       // Bottom left (slightly below y=0)
+    glVertex2i(640, -10);     // Bottom right
+    glVertex2i(640, 80);      // Top right (height is smaller for brown)
+    glVertex2i(0, 80);        // Top left
+    glEnd();
+
+    // Draw the top green grass layer
+    glColor3f(0.192, 0.318, 0.118);  // Dark green for the grass
+    glBegin(GL_POLYGON);
+    glVertex2i(0, 80);       // Bottom left of grass
+    glVertex2i(640, 80);     // Bottom right
+    glVertex2i(640, 100);    // Top right
+    glVertex2i(0, 100);      // Top left
+    glEnd();
+}
+
+
+// Display callback function
+void display()
+{
+    glClear(GL_COLOR_BUFFER_BIT);  // Clear the screen
+
+    drawMonumentTriangles();  // Draw the monument's 7 triangles
+    drawMonumentDetails();    // Draw smaller details in the monument
+    drawFlag();               // Draw the flag
+    drawGround();             // Draw the ground
+
+    glFlush();  // Render now
+}
+
+// Initialize OpenGL Graphics
+void init()
+{
+    glClearColor(0.53, 0.81, 0.92, 1.0);  // Lighter and more vibrant "sky blue" background
+    glMatrixMode(GL_PROJECTION);       // Set projection parameters
+    glLoadIdentity();                  // Reset transformation
+    gluOrtho2D(0.0, 640.0, 0.0, 480.0); // Set the coordinate system
+}
+
+// Main function
+int main(int argc, char** argv)
+{
+    glutInit(&argc, argv);
+    glutCreateWindow("National Monument of Bangladesh - Enhanced Colors");
+    glutInitWindowSize(640, 480);
+    glutInitWindowPosition(50, 50);
+    glutDisplayFunc(display);
+    init();
+    glutMainLoop();
+    return 0;
+}
